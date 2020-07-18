@@ -2,3 +2,4 @@ SATWrapper.code-workspace
 /vendor/
 .DS_Store
 .idea
+test.php

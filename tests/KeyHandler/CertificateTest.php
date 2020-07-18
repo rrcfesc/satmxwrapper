@@ -19,19 +19,31 @@ class CertificateTest extends TestCase
 
     public function testCertificate()
     {
+        $rfc = "rfc";
+        $password = "password";
         $certificateHandler = new Certificate(
             $this->fixDirectory,
-            'rucr860806s2a',
-            'DKAv9g7fB'
+            $rfc,
+            $password
         );
-        $this->assertTrue(true);
+        $pemFile = sprintf("%s/%s.pem", $this->fixDirectory, $rfc);
+        $keyFile = sprintf("%s/%s.key", $this->fixDirectory, $rfc);
+        $this->assertEquals($pemFile, $certificateHandler->getPemFile(), "Miss match Pem path");
+        $this->assertEquals($keyFile, $certificateHandler->getKeyFile(), "Miss match Key path");
+        $this->assertEquals($password, $certificateHandler->getPassword(), "Miss match Password");
+
     }
 
     /**
      * @dataProvider getData
      */
-    public function testExceptions($rfc, $password, $createCer, $createKey, $exceptionMessage)
-    {
+    public function testExceptions(
+        string $rfc,
+        string $password,
+        bool $createCer,
+        bool $createKey,
+        string $exceptionMessage
+    ) {
         $filesystem = new Filesystem();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($exceptionMessage);
