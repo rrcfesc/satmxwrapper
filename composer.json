@@ -1,0 +1,34 @@
+{
+    "name": "rioxygen/satwrapper",
+    "description": "PHPWrapper to navigate into the SAT MX",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ricardo Ruiz",
+            "email": "rrcfesc@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rioxygen\\SatMx\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rioxygen\\SatMx\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=7.3",
+        "ext-curl": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-filter": "*",
+        "symfony/filesystem": "^5",
+        "eclipxe/cfdiutils": "^2.12"
+    },
+    "minimum-stability": "stable"
+}
