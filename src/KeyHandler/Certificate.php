@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rioxygen\SatMx\KeyHandler;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 
