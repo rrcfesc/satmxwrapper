@@ -28,7 +28,9 @@
         "ext-json": "*",
         "ext-filter": "*",
         "symfony/filesystem": "^5",
-        "eclipxe/cfdiutils": "^2.12"
+        "eclipxe/cfdiutils": "^2.12",
+        "symfony/process": "^5",
+        "ext-openssl": "^7.3"
     },
     "minimum-stability": "stable",
     "config": {
