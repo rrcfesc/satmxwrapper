@@ -14,24 +14,39 @@ class CertificateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->fixDirectory = sprintf("%s/fixtures", realpath(__DIR__."/../"));
+        $this->fixDirectory = sprintf(
+            "%s/fixtures",
+            realpath(sprintf("%s/../", __DIR__ ))
+        );
     }
 
     public function testCertificate()
     {
+        $rfc = "rfc";
+        $password = "password";
         $certificateHandler = new Certificate(
             $this->fixDirectory,
-            'rucr860806s2a',
-            'DKAv9g7fB'
+            $rfc,
+            $password
         );
-        $this->assertTrue(true);
+        $pemFile = sprintf("%s/%s.pem", $this->fixDirectory, $rfc);
+        $keyFile = sprintf("%s/%s.key", $this->fixDirectory, $rfc);
+        $this->assertEquals($pemFile, $certificateHandler->getPemFile(), "Miss match Pem path");
+        $this->assertEquals($keyFile, $certificateHandler->getKeyFile(), "Miss match Key path");
+        $this->assertEquals($password, $certificateHandler->getPassword(), "Miss match Password");
+
     }
 
     /**
      * @dataProvider getData
      */
-    public function testExceptions($rfc, $password, $createCer, $createKey, $exceptionMessage)
-    {
+    public function testExceptions(
+        string $rfc,
+        string $password,
+        bool $createCer,
+        bool $createKey,
+        string $exceptionMessage
+    ) {
         $filesystem = new Filesystem();
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($exceptionMessage);
@@ -41,15 +56,16 @@ class CertificateTest extends TestCase
         if ($createCer) {
             $filesystem->touch(sprintf("%s/%s.cer", $this->fixDirectory, $rfc));
         }
+
         if ($createKey) {
             $filesystem->touch(sprintf("%s/%s.key", $this->fixDirectory, $rfc));
         }
+
         $certificateHandler = new Certificate(
             $this->fixDirectory,
             $rfc,
             $password
         );
-
 
     }
 

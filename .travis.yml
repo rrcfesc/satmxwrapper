@@ -9,4 +9,5 @@ matrix:
 
 script:
   - composer install -o
+  - ./bin/phpcs --colors -sp src/ tests/
   - ./bin/phpunit

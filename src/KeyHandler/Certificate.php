@@ -7,7 +7,6 @@ use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
-
 final class Certificate
 {
     /** @var string */
@@ -54,6 +53,8 @@ final class Certificate
             '-out',
             $this->pemFile,
         ]);
+
+        $process->run();
         $filesystem = new Filesystem();
 
         if (!$filesystem->exists($this->pemFile)) {
@@ -68,19 +69,34 @@ final class Certificate
 
     private function validateFilePath():void
     {
-
         $filesystem = new Filesystem();
         $cerFile = sprintf("%s/%s.cer", $this->basePath, $this->rfc);
         $keyFile = sprintf("%s/%s.key", $this->basePath, $this->rfc);
         if (!$filesystem->exists($cerFile)) {
             throw new RuntimeException("Missing cer file");
         }
+
         if (!$filesystem->exists($keyFile)) {
             throw new RuntimeException("Missing key file");
         }
 
         $this->cerFile = $cerFile;
         $this->keyFile = $keyFile;
-        $this->pemFile = $cerFile = sprintf("%s/%s.pem", $this->basePath, $this->rfc);
+        $this->pemFile = sprintf("%s/%s.pem", $this->basePath, $this->rfc);
+    }
+
+    public function getKeyFile(): string
+    {
+        return $this->keyFile;
+    }
+
+    public function getPemFile(): string
+    {
+        return $this->pemFile;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 }
